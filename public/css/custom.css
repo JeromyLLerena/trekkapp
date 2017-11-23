@@ -1,0 +1,20 @@
+.account-title{
+	color: black;
+}
+.section-title-text{
+	display: inline-block;
+}
+.section-title-button{
+	display: inline-block;
+	float: right;
+	margin-left: 10px;
+}
+.img-icon{
+	cursor: pointer;
+}
+.img-icon-bg{
+	background-color: #2e6da4;
+}
+.account-icon-label{
+	border-style: groove;
+}
