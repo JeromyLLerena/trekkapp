@@ -37,6 +37,10 @@ class EventRepository extends BaseRepository
             $event->user_id = $data->user_id;
         }
 
+        if (property_exists($data, 'department_id')) {
+            $event->department_id = $data->department_id;
+        }
+
         if (property_exists($data, 'location')) {
             $event->location = $data->location;
         }
