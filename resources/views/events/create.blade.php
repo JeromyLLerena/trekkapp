@@ -45,6 +45,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             });
         });
      </script>
+		 <style>
+		 	.submit {
+				display: flex;
+				justify-content: space-around;
+			}
+		 </style>
  </head>
 <body>
 	<div class="header">
@@ -184,6 +190,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						</form>
 					</div>
 		   </div>
+			 <div class="submit">
+				 <button type="submit" class="btn btn-primary">Crear Evento</button>
+				 <a type="button" class="btn btn-danger">Cancelar</a>
+			 </div>
 	  </div>
 	  <div class="footer">
 			<div class="container">
