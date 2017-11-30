@@ -107,4 +107,12 @@ class EventController extends Controller
 
         return redirect('/');
     }
+
+    public function favorite(Request $request, $id)
+    {
+        $event = $this->event_repository->find($id);
+        $request->user()->favorited_events()->attach($event->id);
+
+        return redirect('/');
+    }
 }
