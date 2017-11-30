@@ -27,7 +27,7 @@ class CreateInstancesTable extends Migration
 
             $table->foreign('status_id')
                   ->references('id')
-                  ->on('event_statuses')
+                  ->on('instance_statuses')
                   ->onDelete('set null')
                   ->onUpdate('cascade');
 

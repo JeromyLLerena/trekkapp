@@ -8,12 +8,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <html>
 <head>
 <title>Free Snow Bootstrap Website Template | Shop :: w3layouts</title>
-<link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
-<link href="css/style.css" rel='stylesheet' type='text/css' />
+<link href="{{asset('css/bootstrap.css')}}" rel='stylesheet' type='text/css' />
+<link href="{{asset('css/style.css')}}" rel='stylesheet' type='text/css' />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-<script src="js/jquery.min.js"></script>
+<script src="{{asset('js/jquery.min.js')}}"></script>
 <script type="text/javascript">
         $(document).ready(function() {
             $(".dropdown img.flag").addClass("flagvisibility");
@@ -53,10 +53,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			  <div class="col-md-12">
 				 <div class="header-left">
 					 <div class="logo">
-						<a href="index.html"><img src="images/logo.png" alt=""/></a>
+						<a href="index.html"><img src="{{asset('images/logo.png')}}" alt=""/></a>
 					 </div>
 					 <div class="menu">
-						  <a class="toggleMenu" href="#"><img src="images/nav.png" alt="" /></a>
+						  <a class="toggleMenu" href="#"><img src="{{asset('images/nav.png')}}" alt="" /></a>
 						    <ul class="nav" id="nav">
 						    	<li class="current"><a href="shop.html">Shop</a></li>
 						    	<li><a href="team.html">Team</a></li>
@@ -66,7 +66,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 								<li><a href="contact.html">Contact</a></li>
 								<div class="clear"></div>
 							</ul>
-							<script type="text/javascript" src="js/responsive-nav.js"></script>
+							<script type="text/javascript" src="{{asset('js/responsive-nav.js')}}"></script>
 				    </div>
 	    		    <div class="clear"></div>
 	    	    </div>
@@ -82,25 +82,26 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							</div>
 						</div>
 						<!----search-scripts---->
-						<script src="js/classie.js"></script>
-						<script src="js/uisearch.js"></script>
-						<script>
-							new UISearch( document.getElementById( 'sb-search' ) );
-						</script>
+						<script src="{{asset('js/classie.js')}}"></script>
+						<script src="{{asset('js/uisearch.js')}}"></script>
 				    <ul class="icon1 sub-icon1 profile_img">
 					 <li><a class="active-icon c1" href="#"> </a>
 						<ul class="sub-icon1 list">
 						  <div class="product_control_buttons">
-						  	<a href="#"><img src="images/edit.png" alt=""/></a>
-						  		<a href="#"><img src="images/close_edit.png" alt=""/></a>
+						  	<a href="#"><img src="{{asset('images/edit.png')}}" alt=""/></a>
+						  		<a href="#"><img src="{{asset('images/close_edit.png')}}" alt=""/></a>
 						  </div>
 						   <div class="clear"></div>
-						  <li class="list_img"><img src="images/1.jpg" alt=""/></li>
-						  <li class="list_desc"><h4><a href="#">velit esse molestie</a></h4><span class="actual">1 x
+						  <li class="list_img"><img src="{{asset('images/1.jpg')}}" alt=""/></li>
+						  <li class="list_desc"><h4><a href="#">{{'Hola, ' . (auth()->guard('web')->check() ? auth()->guard('web')->user()->name : 'usuario') . '!'}}</a></h4><span class="actual">1 x
                           $12.00</span></li>
 						  <div class="login_buttons">
-							 <div class="check_button"><a href="checkout.html">Check out</a></div>
-							 <div class="login_button"><a href="login.html">Login</a></div>
+							 <div class="check_button"><a href="#">Mis reservas</a></div>
+							 @if(auth()->guard('web')->check())
+							 	<div class="login_button"><a href="{{route('auth.logout')}}">Logout</a></div>
+							 @else
+							 	<div class="login_button"><a href="{{route('auth.login')}}">Login</a></div>
+							 @endif
 							 <div class="clear"></div>
 						  </div>
 						  <div class="clear"></div>
@@ -117,153 +118,28 @@ License URL: http://creativecommons.org/licenses/by/3.0/
       <div class="shop_top">
 		<div class="container">
 			<div class="row shop_box-top">
-				<div class="col-md-3 shop_box"><a href="single.html">
-					<img src="images/pic5.jpg" class="img-responsive" alt=""/>
+				@foreach($events as $event)
+				<div class="col-md-3 shop_box" style="margin-bottom: 20px;"><a href="#">
+					<img src="{{asset($event->photos->first()->url)}}" class="img-responsive" alt=""/>
 					<span class="new-box">
-						<span class="new-label">New</span>
+						<span class="new-label">{{$event->current_instance->formatted_start_date}}</span>
 					</span>
 					<span class="sale-box">
-						<span class="sale-label">Sale!</span>
+						<span class="sale-label">{{$event->current_instance->status->name}}</span>
 					</span>
 					<div class="shop_desc">
-						<h3><a href="#">aliquam volutp</a></h3>
-						<p>Lorem ipsum consectetuer adipiscing </p>
-						<span class="reducedfrom">$66.00</span>
-						<span class="actual">$12.00</span><br>
+						<h3><a href="#">{{$event->name}}</a></h3>
+						<p>{{$event->desccription}} </p>
+						<span class="reducedfrom">S/. {{$event->current_instance->price + 20.00}}</span>
+						<span class="actual">S/. {{$event->current_instance->price}}</span><br>
 						<ul class="buttons">
-							<li class="cart"><a href="#">Unirse</a></li>
+							<li class="cart"><a href="{{route('events.join', $event->id)}}">Unirse</a></li>
 							<li class="shop_btn"><a href="#">ver</a></li>
 							<div class="clear"> </div>
 					    </ul>
 				    </div>
 				</a></div>
-				<div class="col-md-3 shop_box"><a href="single.html">
-					<img src="images/pic6.jpg" class="img-responsive" alt=""/>
-					<span class="new-box">
-						<span class="new-label">New</span>
-					</span>
-					<div class="shop_desc">
-						<h3><a href="#">aliquam volutp</a></h3>
-						<p>Lorem ipsum consectetuer adipiscing </p>
-						<span class="actual">$12.00</span><br>
-						<ul class="buttons">
-							<li class="cart"><a href="#">Unirse</a></li>
-							<li class="shop_btn"><a href="#">ver</a></li>
-							<div class="clear"> </div>
-					    </ul>
-				    </div>
-				</a></div>
-				<div class="col-md-3 shop_box"><a href="single.html">
-					<img src="images/pic7.jpg" class="img-responsive" alt=""/>
-					<span class="new-box">
-						<span class="new-label">New</span>
-					</span>
-					<span class="sale-box">
-						<span class="sale-label">Sale!</span>
-					</span>
-					<div class="shop_desc">
-						<h3><a href="#">aliquam vsadasd</a></h3>
-						<p>Lorem ipsum consectetuer adipiscing </p>
-						<span class="reducedfrom">$66.00</span>
-						<span class="actual">$12.00</span><br>
-						<ul class="buttons">
-							<li class="cart"><a href="#">Unirse</a></li>
-							<li class="shop_btn"><a href="#">ver</a></li>
-							<div class="clear"> </div>
-					    </ul>
-				    </div>
-				</a></div>
-				<div class="col-md-3 shop_box"><a href="single.html">
-					<img src="images/pic8.jpg" class="img-responsive" alt=""/>
-					<span class="new-box">
-						<span class="new-label">New</span>
-					</span>
-					<div class="shop_desc">
-						<h3><a href="#">aliquam volutp</a></h3>
-						<p>Lorem ipsum consectetuer adipiscing </p>
-						<span class="reducedfrom">$66.00</span>
-						<span class="actual">$12.00</span><br>
-						<ul class="buttons">
-							<li class="cart"><a href="#">Unirse</a></li>
-							<li class="shop_btn"><a href="#">ver</a></li>
-							<div class="clear"> </div>
-					    </ul>
-				    </div>
-				</a></div>
-			</div>
-			<div class="row">
-				<div class="col-md-3 shop_box"><a href="single.html">
-					<img src="images/pic9.jpg" class="img-responsive" alt=""/>
-					<span class="new-box">
-						<span class="new-label">New</span>
-					</span>
-					<div class="shop_desc">
-						<h3><a href="#">aliquam volutp</a></h3>
-						<p>Lorem ipsum consectetuer adipiscing </p>
-						<span class="actual">$12.00</span><br>
-						<ul class="buttons">
-							<li class="cart"><a href="#">Unirse</a></li>
-							<li class="shop_btn"><a href="#">ver</a></li>
-							<div class="clear"> </div>
-					    </ul>
-				    </div>
-				</a></div>
-				<div class="col-md-3 shop_box"><a href="single.html">
-					<img src="images/pic10.jpg" class="img-responsive" alt=""/>
-					<span class="new-box">
-						<span class="new-label">New</span>
-					</span>
-					<span class="sale-box">
-						<span class="sale-label">Sale!</span>
-					</span>
-					<div class="shop_desc">
-						<h3><a href="#">aliquam volutp</a></h3>
-						<p>Lorem ipsum consectetuer adipiscing </p>
-						<span class="actual">$12.00</span><br>
-						<ul class="buttons">
-							<li class="cart"><a href="#">Unirse</a></li>
-							<li class="shop_btn"><a href="#">ver</a></li>
-							<div class="clear"> </div>
-					    </ul>
-				    </div>
-				</a></div>
-				<div class="col-md-3 shop_box"><a href="single.html">
-					<img src="images/pic11.jpg" class="img-responsive" alt=""/>
-					<span class="new-box">
-						<span class="new-label">New</span>
-					</span>
-					<div class="shop_desc">
-						<h3><a href="#">aliquam volutp</a></h3>
-						<p>Lorem ipsum consectetuer adipiscing </p>
-						<span class="reducedfrom">$66.00</span>
-						<span class="actual">$12.00</span><br>
-						<ul class="buttons">
-							<li class="cart"><a href="#">Unirse</a></li>
-							<li class="shop_btn"><a href="#">ver</a></li>
-							<div class="clear"> </div>
-					    </ul>
-				    </div>
-				</a></div>
-				<div class="col-md-3 shop_box"><a href="single.html">
-					<img src="images/pic12.jpg" class="img-responsive" alt=""/>
-					<span class="new-box">
-						<span class="new-label">New</span>
-					</span>
-					<span class="sale-box">
-						<span class="sale-label">Sale!</span>
-					</span>
-					<div class="shop_desc">
-						<h3><a href="#">aliquam volutp</a></h3>
-						<p>Lorem ipsum consectetuer adipiscing </p>
-						<span class="reducedfrom">$66.00</span>
-						<span class="actual">$12.00</span><br>
-						<ul class="buttons">
-							<li class="cart"><a href="#">Unirse</a></li>
-							<li class="shop_btn"><a href="#">ver</a></li>
-							<div class="clear"> </div>
-					    </ul>
-				    </div>
-				</a></div>
+				@endforeach
 			</div>
 		 </div>
 	   </div>
@@ -326,12 +202,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				        <dt><a href="#"><span>Change Region</span></a></dt>
 				        <dd>
 				            <ul>
-				                <li><a href="#">Australia<img class="flag" src="images/as.png" alt="" /><span class="value">AS</span></a></li>
-				                <li><a href="#">Sri Lanka<img class="flag" src="images/srl.png" alt="" /><span class="value">SL</span></a></li>
-				                <li><a href="#">Newziland<img class="flag" src="images/nz.png" alt="" /><span class="value">NZ</span></a></li>
-				                <li><a href="#">Pakistan<img class="flag" src="images/pk.png" alt="" /><span class="value">Pk</span></a></li>
-				                <li><a href="#">United Kingdom<img class="flag" src="images/uk.png" alt="" /><span class="value">UK</span></a></li>
-				                <li><a href="#">United States<img class="flag" src="images/us.png" alt="" /><span class="value">US</span></a></li>
+				                <li><a href="#">Australia<img class="flag" src="{{asset('images/as.png')}}" alt="" /><span class="value">AS</span></a></li>
+				                <li><a href="#">Sri Lanka<img class="flag" src="{{asset('images/srl.png')}}" alt="" /><span class="value">SL</span></a></li>
+				                <li><a href="#">Newziland<img class="flag" src="{{asset('images/nz.png')}}" alt="" /><span class="value">NZ</span></a></li>
+				                <li><a href="#">Pakistan<img class="flag" src="{{asset('images/pk.png')}}" alt="" /><span class="value">Pk</span></a></li>
+				                <li><a href="#">United Kingdom<img class="flag" src="{{asset('images/uk.png')}}" alt="" /><span class="value">UK</span></a></li>
+				                <li><a href="#">United States<img class="flag" src="{{asset('images/us.png')}}" alt="" /><span class="value">US</span></a></li>
 				            </ul>
 				         </dd>
 	   				  </dl>

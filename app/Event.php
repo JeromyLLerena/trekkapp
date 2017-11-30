@@ -28,4 +28,9 @@ class Event extends Model
     {
         return $this->belongsToMany(User::class, 'comments', 'event_id', 'user_id');
     }
+
+    public function photos()
+    {
+        return $this->hasMany(EventPhoto::class, 'event_id');
+    }
 }

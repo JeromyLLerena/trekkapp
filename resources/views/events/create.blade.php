@@ -80,7 +80,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	    		  <!-- start search-->
 				   <div class="search-box">
 							<div id="sb-search" class="sb-search">
-								<form method="post" action="{{route('events.create')}}">
+								<form>
 									<input class="sb-search-input" placeholder="Enter your search term..." type="search" name="search" id="search">
 									<input class="sb-search-submit" type="submit" value="">
 									<span class="sb-icon-search"> </span>
@@ -116,7 +116,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
      <div class="main">
       <div class="shop_top">
 	     <div class="container">
-						<form>
+						<form method="post" action="{{route('events.create')}}" enctype="multipart/form-data">
+								{!! csrf_field() !!}
 								<div class="register-top-grid">
 										<h3>CREAR EVENTO</h3>
 										<div >
@@ -137,11 +138,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 										</div>
 										<div>
 											<span>Hora de inicio<label>*</label></span>
-											<input class="form-control" type="time" name="start-time">
+											<input class="form-control" type="time" name="start_time">
 										</div>
 										<div>
 											<span>Hora de fin<label>*</label></span>
-											<input class="form-control" type="time" name="end-time">
+											<input class="form-control" type="time" name="end_time">
 										</div>
 										<div>
 											<span>Descripción<label>*</label></span>
@@ -182,16 +183,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 										<div>
 											<span>Subir Fotos<label>*</label></span>
 											<input type="file" name="photos[1]"></input>
-											<input type="file" name="photos[1]"></input>
-											<input type="file" name="photos[1]"></input>
+											<input type="file" name="photos[2]"></input>
+											<input type="file" name="photos[3]"></input>
 										</div>
-						</form>
-					</div>
-		   </div>
 			 <div class="submit">
 				 <button type="submit" class="btn btn-primary">Crear Evento</button>
 				 <a type="button" class="btn btn-danger">Cancelar</a>
 			 </div>
+						</form>
+					</div>
+		   </div>
 	  </div>
 	  <div class="footer">
 			<div class="container">

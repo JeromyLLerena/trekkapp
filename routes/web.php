@@ -12,23 +12,11 @@
 */
 
 Route::get('/', function(){
-    return view('welcome');
-});
-
-Route::get('/crearevento',function(){
-  return view('events.create');
+    return redirect()->route('events.index');
 });
 
 Route::get('/code',function(){
   return view('auth.code');
-});
-
-Route::get('/index',function(){
-  return view('events.index');
-});
-
-Route::get('/pasarela',function(){
-  return view('payment.pasarela');
 });
 
 Route::group(['middleware' => 'auth'], function(){
@@ -43,6 +31,8 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('/{id}/edit', ['as' => '.edit', 'uses' => 'EventController@showEdit']);
         Route::post('/{id}/edit', ['as' => '.edit', 'uses' => 'EventController@edit']);
         Route::get('/{id}/delete', ['as' => '.delete', 'uses' => 'EventController@delete']);
+        Route::get('/{id}/join', ['as' => '.join', 'uses' => 'EventController@showJoin']);
+        Route::post('/{id}/join', ['as' => '.join', 'uses' => 'EventController@join']);
     });
 });
 

@@ -107,7 +107,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							<div id="sb-search" class="sb-search">
 								<form method="post" action="{{route('events.create')}}">
 									<input class="sb-search-input" placeholder="Enter your search term..." type="search" name="search" id="search">
-									<input class="sb-search-submit" type="submit" value="">
+									<input class="sb-search-submit" type="" value="">
 									<span class="sb-icon-search"> </span>
 								</form>
 							</div>
@@ -143,62 +143,64 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	     <div class="container">
           <div class="detalle">
             <p>DETALLE</p>
-            <img  class="foto" src="{{asset('images/s3.jpg')}}" alt=""/>
+            <img  class="foto" src="{{asset($event->photos->first()->url)}}" alt=""/>
             <div class="info">
               <div class="parrafo">
                 <span class="title">Producto:</span>
-                <span> Marcahuasi Mágico </span>
+                <span> {{$event->name}} </span>
               </div>
               <div>
                 <span class="title">Fecha: </span>
-                <span>29 de octubre</span>
-              </div>
-              <div>
-                <span class="title">Cantidad</span>
-                <span>2</span>
+                <span>{{$event->current_instance->start_date}}</span>
               </div>
               <div>
                 <span class="title">Precio unitario</span>
-                <span>120.00 PEN </span>
+                <span>{{$event->current_instance->price}} PEN </span>
               </div>
               <div>
                 <span class="title">Precio total</span>
-                <span>240.00 PEN</span>
+                <span>{{$event->current_instance->price}} PEN</span>
               </div>
             </div>
           </div>
-						<form>
-								<div class="pago">
+						<form id="culqi-card-form" method="post" action="{{route('events.join', $event->id)}}">
+								{!! csrf_field() !!}
+                                <input type="hidden" name="culqi_token" required>
+                                <div class="pago">
 										<h3>PAGO</h3>
                     <div>
                       <div>
                         Número de tarjeta:
-                        <input type="text" class="form-control" />
+                        <input type="text" class="form-control txtdes" placeholder="Número de Tarjeta" data-culqi="card[number]" id="card[number]" data-error="Ingrese Numero Tarjeta" name="cardNumber"  maxlength="19" required>
                       </div>
                       <div>
                         CVV:
-                        <input type="text" class="form-control" />
+                        <input type="text" name="cvv" class="form-control cvc" placeholder="CVV" data-culqi="card[cvv]" id="card[cvv]" required>
                       </div>
                       <div>
-                        Fecha de expiración
-                        <input type="date" class="form-control" />
+                        Mes de expiración
+                        <input type="text" name="m_exp" class="form-control mesano" placeholder="Mes expiración" data-culqi="card[exp_month]" id="card[exp_month]" required>
+                      </div>
+                      <div>
+                        Año de expiración
+                        <input type="text" name="a_exp" class="form-control mesano" placeholder="Año expiración" data-culqi="card[exp_year]" id="card[exp_year]" required>
                       </div>
                       <div>
                         Email
-                        <input type="email" class="form-control" />
+                        <input type="text" class="form-control txtdes" name="email" data-culqi="card[email]" id="card[email]" placeholder="Email" required>
                       </div>
                       <div>
                         Nombre de tarjeta
-                        <input type="text" class="form-control" />
+                        <input type="text" class="form-control txtdes" name="name" placeholder="Nombre de la Tarjeta" required>
                       </div>
                     </div>
+                               </div>
+             <div class="submit">
+                 <button type="submit" class="confirm-pay btn btn-primary">Confirmar</button>
+                 <a type="button" class="btn btn-danger">Cancelar</a>
+             </div>
 						</form>
 					</div>
-		   </div>
-			 <div class="submit">
-				 <button type="submit" class="btn btn-primary">Confirmar</button>
-				 <a type="button" class="btn btn-danger">Cancelar</a>
-			 </div>
 	  </div>
 	  <div class="footer">
 			<div class="container">
@@ -269,5 +271,33 @@ License URL: http://creativecommons.org/licenses/by/3.0/
    				</div>
 			</div>
 		</div>
+<script src="https://checkout.culqi.com/v2"></script>
+<script type="text/javascript">
+    Culqi.publicKey = "{{env('CULQI_PUBLIC_KEY')}}";
+    Culqi.init();
+
+    $('.confirm-pay').click(function(e){
+        e.preventDefault();
+        $(':input[type="submit"]').prop('disabled', true);
+        Culqi.createToken();
+    })
+
+    function culqi() {
+         
+        if (Culqi.token) { // ¡Token creado exitosamente!
+            // Get the token ID:
+            var token = Culqi.token.id;
+            console.log('Se ha creado un token:' + token);
+            $('input[name="culqi_token"]').val(token);
+            window.setTimeout($('#culqi-card-form').submit(), 3000);
+
+        } else { // ¡Hubo algún problema!
+            // Mostramos JSON de objeto error en consola
+            console.log(Culqi.error);
+            alert(Culqi.error.mensaje);
+        }
+    };
+
+</script>
 </body>
 </html>

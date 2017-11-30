@@ -11,6 +11,7 @@ use App\InstanceStatus;
 use App\InstanceType;
 use App\Department;
 use Storage;
+use Culqi\Culqi;
 
 class EventController extends Controller
 {
@@ -48,9 +49,10 @@ class EventController extends Controller
 
     public function create(Request $request)
     {
-        $data->$request->all();
-        $data['user_id'] = 1;
-        $event = $this->event_repository->save($data);
+        $data = $request->all();
+        $data['user_id'] = $request->user()->id;
+        $data['status_id'] = 1;
+        $event = $this->event_repository->save((object)$data);
 
         $photos = $data['photos'];
 
@@ -58,21 +60,25 @@ class EventController extends Controller
             $photo_path = $photo ? $photo->store(config('constants.upload_paths.photos.events'), 'public') : null;
             if ($photo_path) {
                 $photo_data = ['event_id' => $event->id, 'url' => Storage::url($photo_path)];
-                $this->photo_repository->save($photo_data);
+                $this->photo_repository->save((object)$photo_data);
                 $this->photo_repository = new EventPhotoRepository;
             }
         }
 
         $data['event_id'] = $event->id;
 
-        $instance = $this->instance_repository->save($data);
+        $instance = $this->instance_repository->save((object)$data);
 
-        return redirect('/');
+        return redirect('events.index');
     }
 
     public function showJoin($id)
     {
+        $data = [
+            'event' => $this->event_repository->find($id),
+        ];
 
+        return view('payment.pasarela', $data);
     }
 
     public function join(Request $request , $id)
@@ -89,12 +95,13 @@ class EventController extends Controller
             "installments"  => 0,
             "email"         => request('email'),
             "source_id"     => request('culqi_token'),
+            "metadata"      => ['event_id' => $event->id],
         ]);
 
         if ($charge) {
             $user->joined_events()->attach($event->current_instance->id, ['payment_confirmed' => true]);
 
-            return redirect('/');
+            return redirect()->route('events.index');
         } else {
             return redirect()->back();
         }

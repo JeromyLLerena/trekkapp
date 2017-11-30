@@ -32,6 +32,12 @@ class CreateCustomersTable extends Migration
                   ->on('document_types')
                   ->onDelete('set null')
                   ->onUpdate('cascade');
+
+            $table->foreign('user_id')
+                  ->references('id')
+                  ->on('users')
+                  ->onDelete('cascade')
+                  ->onUPdate('cascade');
         });
     }
 

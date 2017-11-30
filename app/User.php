@@ -46,4 +46,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Event::class, 'comments', 'user_id', 'event_id');
     }
+
+    public function customer()
+    {
+        return $this->hasOne(Customer::class, 'user_id');
+    }
 }
