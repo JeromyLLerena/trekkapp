@@ -50,6 +50,31 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				display: flex;
 				justify-content: space-around;
 			}
+      .container {
+        display: flex;
+      }
+      .detalle {
+        margin-right: 25px;
+      }
+      .pago {
+        width: 100%
+      }
+      .foto {
+        margin: 15px;
+      }
+
+      .title {
+        font-weight: bold;
+      }
+
+      .info {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .parrafo {
+
+      }
 		 </style>
  </head>
 <body>
@@ -116,80 +141,62 @@ License URL: http://creativecommons.org/licenses/by/3.0/
      <div class="main">
       <div class="shop_top">
 	     <div class="container">
+          <div class="detalle">
+            <p>DETALLE</p>
+            <img  class="foto" src="{{asset('images/s3.jpg')}}" alt=""/>
+            <div class="info">
+              <div class="parrafo">
+                <span class="title">Producto:</span>
+                <span> Marcahuasi Mágico </span>
+              </div>
+              <div>
+                <span class="title">Fecha: </span>
+                <span>29 de octubre</span>
+              </div>
+              <div>
+                <span class="title">Cantidad</span>
+                <span>2</span>
+              </div>
+              <div>
+                <span class="title">Precio unitario</span>
+                <span>120.00 PEN </span>
+              </div>
+              <div>
+                <span class="title">Precio total</span>
+                <span>240.00 PEN</span>
+              </div>
+            </div>
+          </div>
 						<form>
-								<div class="register-top-grid">
-										<h3>CREAR EVENTO</h3>
-										<div >
-											<span>Titulo<label>*</label></span>
-											<input class="form-control" type="text" name="name">
-										</div>
-										<div>
-											<span>Ubicación<label>*</label></span>
-											<input class="form-control" type="text" name="location">
-										</div>
-										<div>
-											<span>fecha de inicio<label>*</label></span>
-											<input class="form-control" type="date" name="start_date">
-										</div>
-										<div>
-											<span>fecha de fin<label>*</label></span>
-											<input class="form-control" type="date" name="end_date">
-										</div>
-										<div>
-											<span>Hora de inicio<label>*</label></span>
-											<input class="form-control" type="time" name="start-time">
-										</div>
-										<div>
-											<span>Hora de fin<label>*</label></span>
-											<input class="form-control" type="time" name="end-time">
-										</div>
-										<div>
-											<span>Descripción<label>*</label></span>
-											<textarea class="form-control" type="text" name="description"></textarea>
-										</div>
-										<div>
-											<span>Seleciona Departamento<label>*</label></span>
-											<select class="form-control" type="text" name="department_id">
-												@foreach($departments as $department)
-												<option class="form-control" value="{{$department->id}}">{{$department->name}}</option>
-												@endforeach
-											</select>
-										</div>
-										<div>
-											<span>tipo<label>*</label></span>
-											<select class="form-control" name="type_id">
-												@foreach($types as $type)
-												<option class="form-control" value="{{$type->id}}">{{$type->name}}</option>
-												@endforeach
-											</select>
-										</div>
-										<div>
-											<span>Itinerario<label>*</label></span>
-											<textarea class="form-control" type="text" name="itinerary"></textarea>
-										</div>
-										<div>
-											<span>Recomendaciones<label>*</label></span>
-											<textarea class="form-control" type="text" name="recommendations"></textarea>
-										</div>
-										<div>
-											<span>Capacidad<label>*</label></span>
-											<input class="form-control" type="number" name="capacity"></input>
-										</div>
-										<div>
-											<span>Precio<label>*</label></span>
-											<input class="form-control" type="number" placeholder="S./" name="price"></input>
-										</div>
-										<div>
-											<span>Subir Fotos<label>*</label></span>
-											<input type="file" name="photos[1]"></input>
-											<input type="file" name="photos[1]"></input>
-											<input type="file" name="photos[1]"></input>
-										</div>
+								<div class="pago">
+										<h3>PAGO</h3>
+                    <div>
+                      <div>
+                        Número de tarjeta:
+                        <input type="text" class="form-control" />
+                      </div>
+                      <div>
+                        CVV:
+                        <input type="text" class="form-control" />
+                      </div>
+                      <div>
+                        Fecha de expiración
+                        <input type="date" class="form-control" />
+                      </div>
+                      <div>
+                        Email
+                        <input type="email" class="form-control" />
+                      </div>
+                      <div>
+                        Nombre de tarjeta
+                        <input type="text" class="form-control" />
+                      </div>
+                    </div>
 						</form>
 					</div>
 		   </div>
 			 <div class="submit">
-				 <button type="submit" class="btn btn-primary">Crear Evento</button>
+				 <button type="submit" class="btn btn-primary">Confirmar</button>
 				 <a type="button" class="btn btn-danger">Cancelar</a>
 			 </div>
 	  </div>

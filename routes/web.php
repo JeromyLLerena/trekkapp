@@ -23,6 +23,14 @@ Route::get('/code',function(){
   return view('auth.code');
 });
 
+Route::get('/index',function(){
+  return view('events.index');
+});
+
+Route::get('/pasarela',function(){
+  return view('payment.pasarela');
+});
+
 Route::group(['middleware' => 'auth'], function(){
     Route::group(['prefix' => 'home', 'as' => 'home', 'namespace' => 'Home'], function(){
         Route::get('/', ['as' => '.dashboard', 'uses' => 'HomeController@dashboard']);
