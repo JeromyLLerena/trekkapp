@@ -39,7 +39,7 @@ class User extends Authenticatable
 
     public function joined_events()
     {
-        return $this->belongsToMany(Event::class, 'memberships', 'user_id', 'event_id');
+        return $this->belongsToMany(Instance::class, 'memberships', 'user_id', 'instance_id');
     }
 
     public function commented_events()

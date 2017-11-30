@@ -69,4 +69,50 @@ class EventController extends Controller
 
         return redirect('/');
     }
+
+    public function showJoin($id)
+    {
+
+    }
+
+    public function join(Request $request , $id)
+    {
+        $event = $this->event_repository->find($id);
+        $culqi = new Culqi(array('api_key' => ENV('CULQI_SECRET_KEY')));
+        $user = $request->user();
+
+        $charge          = $culqi->Charges->create([
+            "amount"        => $event->current_instance->price,
+            "capture"       => false,
+            "currency_code" => "PEN",
+            "description"   => $event->name,
+            "installments"  => 0,
+            "email"         => request('email'),
+            "source_id"     => request('culqi_token'),
+        ]);
+
+        if ($charge) {
+            $user->joined_events()->attach($event->current_instance->id, ['payment_confirmed' => true]);
+
+            return redirect('/');
+        } else {
+            return redirect()->back();
+        }
+    }
+
+    public function comment(Request $request, $id)
+    {
+        $event = $this->event_repository->find($id);
+        $request->user()->commented_events()->attach($event->id, ['text' => $request->get('text')]);
+
+        return redirect('/');
+    }
+
+    public function favorite(Request $request, $id)
+    {
+        $event = $this->event_repository->find($id);
+        $request->user()->favorited_events()->attach($event->id);
+
+        return redirect('/');
+    }
 }

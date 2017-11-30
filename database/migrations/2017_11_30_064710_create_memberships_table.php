@@ -15,7 +15,7 @@ class CreateMembershipsTable extends Migration
     {
         Schema::create('memberships', function(Blueprint $table){
             $table->unsignedInteger('user_id');
-            $table->unsignedInteger('event_id');
+            $table->unsignedInteger('instance_id');
             $table->boolean('payment_confirmed')->default(0);
 
             $table->foreign('user_id')
@@ -24,9 +24,9 @@ class CreateMembershipsTable extends Migration
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
 
-            $table->foreign('event_id')
+            $table->foreign('instance_id')
                   ->references('id')
-                  ->on('events')
+                  ->on('instances')
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
         });
