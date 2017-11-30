@@ -62,7 +62,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						<a href="index.html"><img src="{{asset('images/logo.png')}}" alt=""/></a>
 					 </div>
 					 <div class="menu">
-						  <a class="toggleMenu" href="#"><img src="images/nav.png" alt="" /></a>
+						  <a class="toggleMenu" href="#"><img src="{{asset('images/nav.png')}}"  alt="" /></a>
 						    <ul class="nav" id="nav">
 						    	<li><a href="shop.html">Shop</a></li>
 						    	<li><a href="team.html">Team</a></li>
@@ -87,18 +87,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 								</form>
 							</div>
 						</div>
-						<script>
-							new UISearch( document.getElementById( 'sb-search' ) );
-						</script>
 				     <ul class="icon1 sub-icon1 profile_img">
 					 <li><a class="active-icon c1" href="#"> </a>
 						<ul class="sub-icon1 list">
 						  <div class="product_control_buttons">
-						  	<a href="#"><img src="images/edit.png" alt=""/></a>
-						  		<a href="#"><img src="images/close_edit.png" alt=""/></a>
+						  	<a href="#"><img src="{{asset('images/edit.png')}}" alt=""/></a>
+						  		<a href="#"><img src="{{asset('images/close_edit.png')}}" alt=""/></a>
 						  </div>
 						   <div class="clear"></div>
-						  <li class="list_img"><img src="images/1.jpg" alt=""/></li>
+						  <li class="list_img"><img src="{{asset('images/1.jpg')}}" alt=""/></li>
 						  <li class="list_desc"><h4><a href="#">velit esse molestie</a></h4><span class="actual">1 x
                           $12.00</span></li>
 						  <div class="login_buttons">
@@ -253,12 +250,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				        <dt><a href="#"><span>Change Region</span></a></dt>
 				        <dd>
 				            <ul>
-				                <li><a href="#">Australia<img class="flag" src="images/as.png" alt="" /><span class="value">AS</span></a></li>
-				                <li><a href="#">Sri Lanka<img class="flag" src="images/srl.png" alt="" /><span class="value">SL</span></a></li>
-				                <li><a href="#">Newziland<img class="flag" src="images/nz.png" alt="" /><span class="value">NZ</span></a></li>
-				                <li><a href="#">Pakistan<img class="flag" src="images/pk.png" alt="" /><span class="value">Pk</span></a></li>
-				                <li><a href="#">United Kingdom<img class="flag" src="images/uk.png" alt="" /><span class="value">UK</span></a></li>
-				                <li><a href="#">United States<img class="flag" src="images/us.png" alt="" /><span class="value">US</span></a></li>
+				                <li><a href="#">Australia<img class="flag" src="{{asset('images/as.png')}}" alt="" /><span class="value">AS</span></a></li>
+				                <li><a href="#">Sri Lanka<img class="flag" src="{{asset('images/srl.png')}}" alt="" /><span class="value">SL</span></a></li>
+				                <li><a href="#">Newziland<img class="flag" src="{{asset('images/nz.png')}}" alt="" /><span class="value">NZ</span></a></li>
+				                <li><a href="#">Pakistan<img class="flag" src="{{asset('images/pk.png')}}" alt="" /><span class="value">Pk</span></a></li>
+				                <li><a href="#">United Kingdom<img class="flag" src="{{asset('images/uk.png')}}" alt="" /><span class="value">UK</span></a></li>
+				                <li><a href="#">United States<img class="flag" src="{{asset('images/us.png')}}" alt="" /><span class="value">US</span></a></li>
 				            </ul>
 				         </dd>
 	   				  </dl>

@@ -19,6 +19,10 @@ Route::get('/crearevento',function(){
   return view('events.create');
 });
 
+Route::get('/code',function(){
+  return view('auth.code');
+});
+
 Route::group(['middleware' => 'auth'], function(){
     Route::group(['prefix' => 'home', 'as' => 'home', 'namespace' => 'Home'], function(){
         Route::get('/', ['as' => '.dashboard', 'uses' => 'HomeController@dashboard']);
