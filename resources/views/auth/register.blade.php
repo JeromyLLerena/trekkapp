@@ -33,7 +33,7 @@
                                 <div class="form-group">
                                     <label class="verify-number"></label>
                                     <input class="form-control" placeholder="Telefono" name="phone" type="text">
-                                    <a href="#" class="btn btn-default form-control verify-button">Verificar número</a>
+                                    <!--<a href="#" class="btn btn-default form-control verify-button">Verificar número</a>-->
                                 </div>
                                 <div class="form-group">
                                     <input class="form-control" placeholder="Direccion" name="address" type="text">
@@ -62,19 +62,15 @@
         $('.verify-button').click(function(){
             $.ajax({
                 crossDomain: true,
-                headers: {
-                    "Access-Control-Allow-Origin":  "https://4a90c5e0.ngrok.io",
-                    "Access-Control-Allow-Methods": "POST",
-                    "Access-Control-Allow-Headers": "Content-Type, Authorization"
-                },
                 method: "POST",
-                'url': "https://api.nexmo.com/verify/json",
-                data: {
+                dataType: "jsonp",
+                url: "https://api.nexmo.com/verify/json",
+                data: JSON.stringify({
                     api_key: "{{env('NEXMO_API_KEY')}}",
                     api_secret: "{{env('NEXMO_SECRET_KEY')}}",
                     number: "51" + $('inut[name="phone"]').val(),
                     brand: "Trekk App"
-                }
+                })
             }).done(function(data) {
                 request_id = data.request_id;
                 console.log(data.request_id);

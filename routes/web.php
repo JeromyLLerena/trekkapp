@@ -43,3 +43,8 @@ Route::group(['prefix' => 'auth', 'as' => 'auth', 'namespace' => 'Auth'], functi
     Route::get('register', ['as' => '.register', 'uses' => 'RegisterController@showRegister']);
     Route::post('register', ['as' => '.register', 'uses' => 'RegisterController@register']);
 });
+
+
+Route::post('send', function(){
+    exec();
+});
