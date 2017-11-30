@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function(){
-    return redirect()->route('auth.login');
+    return view('welcome');
 });
 
 Route::get('/crearevento',function(){
