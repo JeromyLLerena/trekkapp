@@ -15,6 +15,10 @@ Route::get('/', function(){
     return redirect()->route('auth.login');
 });
 
+Route::get('/crearevento',function(){
+  return view('events.create');
+});
+
 Route::group(['middleware' => 'auth'], function(){
     Route::group(['prefix' => 'home', 'as' => 'home', 'namespace' => 'Home'], function(){
         Route::get('/', ['as' => '.dashboard', 'uses' => 'HomeController@dashboard']);
