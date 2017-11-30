@@ -18,6 +18,7 @@ class CreateEventsTable extends Migration
             $table->string('name');
             $table->text('description');
             $table->unsignedInteger('user_id')->nullable();
+            $table->unsignedInteger('department_id');
             $table->string('location');
             $table->text('recommendations');
             $table->text('itinerary');
@@ -27,6 +28,12 @@ class CreateEventsTable extends Migration
                   ->references('id')
                   ->on('users')
                   ->onDelete('set null')
+                  ->onUpdate('cascade');
+
+            $table->foreign('department_id')
+                  ->references('id')
+                  ->on('departments')
+                  ->onDelete('cascade')
                   ->onUpdate('cascade');
         });
     }

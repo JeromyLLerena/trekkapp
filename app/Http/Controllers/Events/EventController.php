@@ -9,6 +9,7 @@ use App\Repositories\InstanceRepository;
 use App\Repositories\EventPhotoRepository;
 use App\InstanceStatus;
 use App\InstanceType;
+use App\Department;
 use Storage;
 
 class EventController extends Controller
@@ -27,12 +28,22 @@ class EventController extends Controller
 
     public function index()
     {
+        $data = [
+            'events' => $this->event_repository->all(),
+            'departments' => Department::all(),
+        ];
+
+        return view('events.index', $data);
     }
 
     public function showCreate()
     {
-        $statuses = InstanceStatus::all();
-        $types = InstanceType::all();
+        $data = [
+            'types' => InstanceType::all(),
+            'departments' => Department::all(),
+        ];
+
+        return view('events.create', $data);
     }
 
     public function create(Request $request)
