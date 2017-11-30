@@ -59,7 +59,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			  <div class="col-md-12">
 				 <div class="header-left">
 					 <div class="logo">
-						<a href="index.html"><img src="images/logo.png" alt=""/></a>
+						<a href="index.html"><img src="{{asset('images/logo.png')}}" alt=""/></a>
 					 </div>
 					 <div class="menu">
 						  <a class="toggleMenu" href="#"><img src="images/nav.png" alt="" /></a>
@@ -72,7 +72,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 								<li><a href="contact.html">Contact</a></li>
 								<div class="clear"></div>
 							</ul>
-							<script type="text/javascript" src="js/responsive-nav.js"></script>
+							<script type="text/javascript" src="{{asset('js/responsive-nav.js')}}"></script>
 				    </div>
 	    		    <div class="clear"></div>
 	    	    </div>
@@ -80,16 +80,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	    		  <!-- start search-->
 				   <div class="search-box">
 							<div id="sb-search" class="sb-search">
-								<form>
+								<form method="post" action="{{route('events.create')}}">
 									<input class="sb-search-input" placeholder="Enter your search term..." type="search" name="search" id="search">
 									<input class="sb-search-submit" type="submit" value="">
 									<span class="sb-icon-search"> </span>
 								</form>
 							</div>
 						</div>
-						<!----search-scripts---->
-						<script src="js/classie.js"></script>
-						<script src="js/uisearch.js"></script>
 						<script>
 							new UISearch( document.getElementById( 'sb-search' ) );
 						</script>
@@ -156,13 +153,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 										<div>
 											<span>Seleciona Departamento<label>*</label></span>
 											<select class="form-control" type="text" name="department_id">
-												<option class="form-control" value="ancash">ancash</option>
+												@foreach($departments as $department)
+												<option class="form-control" value="{{$department->id}}">{{$department->name}}</option>
+												@endforeach
 											</select>
 										</div>
 										<div>
 											<span>tipo<label>*</label></span>
 											<select class="form-control" name="type_id">
-												<option class="form-control" value="tipo">tipo</option>
+												@foreach($types as $type)
+												<option class="form-control" value="{{$type->id}}">{{$type->name}}</option>
+												@endforeach
 											</select>
 										</div>
 										<div>
