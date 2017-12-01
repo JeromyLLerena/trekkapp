@@ -69,7 +69,7 @@
                 //crossDomain: true,
                 method: "POST",
 //                url: "https://api.nexmo.com/verify/json",
-                url: "http://trekk.app/send",
+                url: "{{env('APP_URL')}}" + "/send",
                 data: {
                     phone: $('input[name="phone"]').val(),
                     _token : "{{csrf_token()}}"
@@ -88,7 +88,7 @@
                 //crossDomain: true,
                 method: "POST",
 //                url: "https://api.nexmo.com/verify/json",
-                url: "http://trekk.app/verify",
+                url: "{{env('APP_URL')}}" + "/verify",
                 data: {
                     request_id: $('input[name="request_id"]').val(),
                     code : $('input[name="code"]').val(),
