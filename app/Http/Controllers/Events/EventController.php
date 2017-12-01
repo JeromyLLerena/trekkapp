@@ -69,7 +69,7 @@ class EventController extends Controller
 
         $instance = $this->instance_repository->save((object)$data);
 
-        return redirect('events.index');
+        return redirect()->route('events.index');
     }
 
     public function showJoin($id)
