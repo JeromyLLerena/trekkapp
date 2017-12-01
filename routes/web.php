@@ -46,5 +46,11 @@ Route::group(['prefix' => 'auth', 'as' => 'auth', 'namespace' => 'Auth'], functi
 
 
 Route::post('send', function(){
-    exec();
+    $response = exec('curl -X POST  https://api.nexmo.com/verify/json -d api_key=7bbc99d7 -d api_secret=052d83f379272bbb -d number=51' . request('phone') . ' -d brand="TrekkApp"');
+    return $response;
+});
+
+Route::post('verify', function(){
+    $response = exec('curl -X POST  https://api.nexmo.com/verify/check/json -d api_key=7bbc99d7 -d api_secret=052d83f379272bbb -d request_id="' . request('request_id'). '" -d code=' . request('code'));
+    return $response;
 });

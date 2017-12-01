@@ -33,9 +33,12 @@
                                 <div class="form-group">
                                     <label class="verify-number"></label>
                                     <input class="form-control" placeholder="Telefono" name="phone" type="text">
-                                    <!--<a href="#" class="btn btn-default form-control verify-button">Verificar número</a>-->
+                                    <a href="#" class="btn btn-default form-control send-button">Enviar código</a>
+                                    <input type="text" name="code" placeholder="Código de verificación" class="form-control">
+                                    <a href="#" class="btn btn-default form-control verify-button">Verificar número</a>
                                 </div>
-                                <div class="form-group">
+                                <div c
+                                lass="form-group">
                                     <input class="form-control" placeholder="Direccion" name="address" type="text">
                                 </div>
                                 <div class="form-group">
@@ -44,8 +47,9 @@
                                 <div class="form-group">
                                     <input class="form-control" placeholder="Confirmación de contraseña" name="password_confirmation" type="password" value="">
                                 </div>
+                                <input type="hidden" name="request_id">
                                 <!-- Change this to a button or input when using this as a form -->
-                                <button type="submit" class="btn btn-lg btn-success btn-block">Registrarme</button>
+                                <button type="submit" class="btn btn-lg btn-success btn-block registrar">Registrarme</button>
                             </fieldset>
                         </form>
                     </div>
@@ -57,23 +61,47 @@
 
 @section('extra_scripts')
     <script type="text/javascript">
+        $('.registrar').attr('disabled', 'disabled');
         var request_id = 0;
+
+        $('.send-button').click(function(){
+            $.ajax({
+                //crossDomain: true,
+                method: "POST",
+//                url: "https://api.nexmo.com/verify/json",
+                url: "http://trekk.app/send",
+                data: {
+                    phone: $('input[name="phone"]').val(),
+                    _token : "{{csrf_token()}}"
+                }
+            }).done(function(data) {
+                var response = JSON.parse(data);
+                $('input[name="request_id"]').val(response.request_id);
+                var status = response.status;
+            }).fail(function() {
+                alert("Error, intente nuevamente.");
+            });
+        });
 
         $('.verify-button').click(function(){
             $.ajax({
-                crossDomain: true,
+                //crossDomain: true,
                 method: "POST",
-                dataType: "jsonp",
-                url: "https://api.nexmo.com/verify/json",
-                data: JSON.stringify({
-                    api_key: "{{env('NEXMO_API_KEY')}}",
-                    api_secret: "{{env('NEXMO_SECRET_KEY')}}",
-                    number: "51" + $('inut[name="phone"]').val(),
-                    brand: "Trekk App"
-                })
+//                url: "https://api.nexmo.com/verify/json",
+                url: "http://trekk.app/verify",
+                data: {
+                    request_id: $('input[name="request_id"]').val(),
+                    code : $('input[name="code"]').val(),
+                    _token : "{{csrf_token()}}"
+                }
             }).done(function(data) {
-                request_id = data.request_id;
-                console.log(data.request_id);
+                var response = JSON.parse(data);
+                var status = response.status;
+                if (response.status != 0) {
+                    $('.registrar').attr('disabled', 'disabled');
+                } else {
+                    $('.registrar').attr('disabled', false);
+                }
             }).fail(function() {
                 alert("Error, intente nuevamente.");
             });
