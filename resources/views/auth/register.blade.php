@@ -31,9 +31,9 @@
                                     <input class="form-control" placeholder="E-mail" name="email" type="email">
                                 </div>
                                 <div class="form-group">
-                                    <label class="verify-number"></label>
                                     <input class="form-control" placeholder="Telefono" name="phone" type="text">
                                     <a href="#" class="btn btn-default form-control send-button">Enviar código</a>
+                                    <label class="verify-number"></label>
                                     <input type="text" name="code" placeholder="Código de verificación" class="form-control">
                                     <a href="#" class="btn btn-default form-control verify-button">Verificar número</a>
                                 </div>
@@ -99,8 +99,12 @@
                 var status = response.status;
                 if (response.status != 0) {
                     $('.registrar').attr('disabled', 'disabled');
+                    $('.verify-number').css("color", "red");
+                    $('.verify-number').text("Código incorrecto, intente nuevamente.");
                 } else {
                     $('.registrar').attr('disabled', false);
+                    $('.verify-number').css("color", "green");
+                    $('.verify-number').text("Código verificado!");
                 }
             }).fail(function() {
                 alert("Error, intente nuevamente.");
