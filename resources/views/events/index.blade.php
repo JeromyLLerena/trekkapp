@@ -64,6 +64,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						    	<li><a href="experiance.html">Experiance</a></li>
 						    	<li><a href="shop.html">Company</a></li>
 								<li><a href="contact.html">Contact</a></li>
+								<li><a href="{{route('events.create')}}">Crear evento</a></li>
 								<div class="clear"></div>
 							</ul>
 							<script type="text/javascript" src="{{asset('js/responsive-nav.js')}}"></script>
